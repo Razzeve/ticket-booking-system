@@ -14,7 +14,20 @@ app.get("/health", async (_req, res) => {
   }
 });
 
+app.get("/tickets", async (_req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT tier, price, available FROM tickets ORDER BY price DESC"
+    );
+    res.json(result.rows);
+  } catch (err: any) {
+    console.error("FETCH TICKETS ERROR:", err.message);
+    res.status(500).json({ error: "Failed to fetch tickets" });
+  }
+});
+
 const PORT = 3001;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
