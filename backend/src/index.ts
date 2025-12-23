@@ -1,7 +1,9 @@
 import express = require("express");
+import cors = require("cors");
 import { pool } from "./db";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", async (_req, res) => {
